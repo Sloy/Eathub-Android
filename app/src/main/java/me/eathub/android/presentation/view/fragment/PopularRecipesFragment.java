@@ -34,14 +34,20 @@ import me.eathub.android.presentation.view.adapter.RecipeGridAdapter;
 
 public class PopularRecipesFragment extends BaseFragment implements PopularRecipesView {
 
+    public interface RecipeListListener {
+        void onRecipeClicked(final RecipeModel recipeModel);
+    }
+
     @InjectView(R.id.popular_recipes_list) RecyclerView recyclerView;
 
-    private PopularRecipesActivity activity;
     private PopularRecipesPresenter popularRecipesPresenter;
     private Picasso picasso;
 
+    private RecipeListListener recipeListListener;
+
     public PopularRecipesFragment() {
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -61,10 +67,6 @@ public class PopularRecipesFragment extends BaseFragment implements PopularRecip
 
     @Override public void renderRecipeList(List<RecipeModel> recipeModelCollection) {
         recyclerView.setAdapter(new RecipeGridAdapter(recipeModelCollection, picasso));
-    }
-
-    @Override public void setHeaderTitle(String title) {
-        activity.getSupportActionBar().setTitle(title);
     }
 
     @Override void initializePresenter() {
@@ -103,11 +105,12 @@ public class PopularRecipesFragment extends BaseFragment implements PopularRecip
 
     @Override public void onAttach(Activity activity) {
         super.onAttach(activity);
-        this.activity = (PopularRecipesActivity) activity;
+        if (activity instanceof RecipeListListener) {
+            recipeListListener = (RecipeListListener) activity;
+        }
     }
 
     @Override public void onDetach() {
         super.onDetach();
-        this.activity = null;
     }
 }

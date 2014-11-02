@@ -8,5 +8,4 @@ public interface PopularRecipesView extends LoadDataView{
 
     void renderRecipeList(List<RecipeModel> recipeModelCollection);
 
-    void setHeaderTitle(String title);
 }

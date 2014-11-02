@@ -13,10 +13,11 @@ import android.view.ViewGroup;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import me.eathub.android.R;
+import me.eathub.android.presentation.model.RecipeModel;
 import me.eathub.android.presentation.view.fragment.PopularRecipesFragment;
 
 
-public class PopularRecipesActivity extends BaseActivity {
+public class PopularRecipesActivity extends BaseActivity implements PopularRecipesFragment.RecipeListListener{
 
     @InjectView(R.id.toolbar) Toolbar toolbar;
 
@@ -27,6 +28,7 @@ public class PopularRecipesActivity extends BaseActivity {
         ButterKnife.inject(this);
 
         setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle("Popular Recipes");
 
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
@@ -48,12 +50,10 @@ public class PopularRecipesActivity extends BaseActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-
         return super.onOptionsItemSelected(item);
     }
 
-    public Toolbar getToolbar() {
-        return toolbar;
+    @Override public void onRecipeClicked(RecipeModel recipeModel) {
+        //TODO open detail activity
     }
-
 }
