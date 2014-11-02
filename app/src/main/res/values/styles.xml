@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <style name="Eathub" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/primary</item>
@@ -12,7 +12,7 @@
 
     <style name="HeaderBar">
         <item name="android:background">?colorPrimary</item>
-        <item name="android:elevation">@dimen/headerbar_elevation</item>
+        <item name="android:elevation" tools:ignore="NewApi">@dimen/headerbar_elevation</item>
     </style>
 
     <style name="ActionBar.TitleText" parent="TextAppearance.AppCompat.Widget.ActionBar.Title">
