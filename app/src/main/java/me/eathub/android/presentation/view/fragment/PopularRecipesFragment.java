@@ -15,12 +15,14 @@ import java.util.List;
 import butterknife.ButterKnife;
 import butterknife.InjectView;
 import me.eathub.android.R;
+import me.eathub.android.data.entity.mapper.RecipeEntityDataMapper;
+import me.eathub.android.data.repository.RecipeDataRepository;
+import me.eathub.android.data.repository.datasource.RecipeDataStoreFactory;
 import me.eathub.android.domain.executor.AsyncExecutor;
 import me.eathub.android.domain.executor.PostExecutor;
 import me.eathub.android.domain.interactor.GetPopularRecipeListUseCase;
 import me.eathub.android.domain.interactor.GetPopularRecipeListUseCaseImpl;
 import me.eathub.android.domain.repository.RecipeRepository;
-import me.eathub.android.domain.repository.RecipeRepositoryMock;
 import me.eathub.android.presentation.UIThread;
 import me.eathub.android.presentation.executor.JobExecutor;
 import me.eathub.android.presentation.mapper.RecipeModelDataMapper;
@@ -66,11 +68,14 @@ public class PopularRecipesFragment extends BaseFragment implements PopularRecip
     }
 
     @Override void initializePresenter() {
-        AsyncExecutor asyncExecutor = JobExecutor.getInstance();
-        RecipeRepository recipeRepository = new RecipeRepositoryMock();
-        PostExecutor postExecutor = UIThread.getInstance();
+        RecipeEntityDataMapper recipeEntityDataMapper = new RecipeEntityDataMapper();
+        RecipeDataStoreFactory recipeDataStoreFactory = new RecipeDataStoreFactory();
+        RecipeRepository recipeRepository = RecipeDataRepository.getInstance(recipeDataStoreFactory, recipeEntityDataMapper);
 
+        AsyncExecutor asyncExecutor = JobExecutor.getInstance();
+        PostExecutor postExecutor = UIThread.getInstance();
         GetPopularRecipeListUseCase getPopularRecipeListUseCase = new GetPopularRecipeListUseCaseImpl(recipeRepository, asyncExecutor, postExecutor);
+
         RecipeModelDataMapper recipeModelDataMapper = new RecipeModelDataMapper();
 
         popularRecipesPresenter = new PopularRecipesPresenter(this, getPopularRecipeListUseCase, recipeModelDataMapper);

@@ -1,0 +1,7 @@
+<manifest
+    package="me.eathub.android.data"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application android:allowBackup="true"/>
+
+</manifest>

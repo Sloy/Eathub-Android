@@ -1,11 +1,11 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 
 android {
     compileSdkVersion 21
     buildToolsVersion "21.0.2"
 
     defaultConfig {
-        applicationId "me.eathub.android"
+        applicationId "me.eathub.android.data"
         minSdkVersion 16
         targetSdkVersion 21
         versionCode 1
@@ -21,15 +21,8 @@ android {
 
 dependencies {
     def domainLayer = project(':domain')
-    def dataLayer = project(':data')
 
     compile domainLayer
-    compile dataLayer
 
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:21.0.0'
-    compile 'com.android.support:recyclerview-v7:21.0.0'
-    compile 'com.squareup.picasso:picasso:2.3.2'
-    compile 'com.jakewharton:butterknife:5.1.1'
-    compile 'com.squareup.dagger:dagger:1.2.1'
 }
