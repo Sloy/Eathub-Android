@@ -1,5 +1,6 @@
 package me.eathub.android.presentation.view.fragment;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -26,12 +27,14 @@ import me.eathub.android.presentation.mapper.RecipeModelDataMapper;
 import me.eathub.android.presentation.model.RecipeModel;
 import me.eathub.android.presentation.presenter.PopularRecipesPresenter;
 import me.eathub.android.presentation.view.PopularRecipesView;
+import me.eathub.android.presentation.view.activity.PopularRecipesActivity;
 import me.eathub.android.presentation.view.adapter.RecipeGridAdapter;
 
 public class PopularRecipesFragment extends BaseFragment implements PopularRecipesView {
 
     @InjectView(R.id.popular_recipes_list) RecyclerView recyclerView;
 
+    private PopularRecipesActivity activity;
     private PopularRecipesPresenter popularRecipesPresenter;
     private Picasso picasso;
 
@@ -51,21 +54,22 @@ public class PopularRecipesFragment extends BaseFragment implements PopularRecip
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
         picasso = Picasso.with(getActivity());
-
         this.popularRecipesPresenter.initialize();
-
     }
 
     @Override public void renderRecipeList(List<RecipeModel> recipeModelCollection) {
         recyclerView.setAdapter(new RecipeGridAdapter(recipeModelCollection, picasso));
     }
 
-    @Override void initializePresenter() {
+    @Override public void setHeaderTitle(String title) {
+        activity.getSupportActionBar().setTitle(title);
+    }
 
+    @Override void initializePresenter() {
         AsyncExecutor asyncExecutor = JobExecutor.getInstance();
         RecipeRepository recipeRepository = new RecipeRepositoryMock();
         PostExecutor postExecutor = UIThread.getInstance();
-        
+
         GetPopularRecipeListUseCase getPopularRecipeListUseCase = new GetPopularRecipeListUseCaseImpl(recipeRepository, asyncExecutor, postExecutor);
         RecipeModelDataMapper recipeModelDataMapper = new RecipeModelDataMapper();
 
@@ -90,5 +94,15 @@ public class PopularRecipesFragment extends BaseFragment implements PopularRecip
 
     @Override public void showError(String message) {
         //TODO
+    }
+
+    @Override public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.activity = (PopularRecipesActivity) activity;
+    }
+
+    @Override public void onDetach() {
+        super.onDetach();
+        this.activity = null;
     }
 }

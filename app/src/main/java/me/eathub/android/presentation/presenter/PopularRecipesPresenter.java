@@ -24,7 +24,12 @@ public class PopularRecipesPresenter implements Presenter{
     }
 
     public void initialize() {
+        this.setTitle();
         this.loadRecipeList();
+    }
+
+    private void setTitle() {
+        this.viewRecipeList.setHeaderTitle("Popular Recipes");
     }
 
     private void loadRecipeList() {

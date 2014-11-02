@@ -25,24 +25,31 @@ public class RecipeRepositoryMock implements RecipeRepository {
         recipe3.setAuthorName("Argentina");
         recipe3.setCoverUrl("http://eathub.s3.amazonaws.com/images/milanesa.persist.jpg");
 
+        Recipe recipe4 = new Recipe(4);
+        recipe4.setTitle("Piruletas caseras");
+        recipe4.setAuthorName("Virgi");
+        recipe4.setCoverUrl("http://eathub.s3.amazonaws.com/images/pirus_0.persist.jpg");
+
         recipes.add(recipe1);
         recipes.add(recipe2);
         recipes.add(recipe3);
+        recipes.add(recipe4);
         recipes.add(recipe1);
         recipes.add(recipe2);
         recipes.add(recipe3);
+        recipes.add(recipe4);
         recipes.add(recipe1);
         recipes.add(recipe2);
         recipes.add(recipe3);
+        recipes.add(recipe4);
         recipes.add(recipe1);
         recipes.add(recipe2);
         recipes.add(recipe3);
+        recipes.add(recipe4);
         recipes.add(recipe1);
         recipes.add(recipe2);
         recipes.add(recipe3);
-        recipes.add(recipe1);
-        recipes.add(recipe2);
-        recipes.add(recipe3);
+        recipes.add(recipe4);
 
         callback.onRecipeListLoaded(recipes);
     }

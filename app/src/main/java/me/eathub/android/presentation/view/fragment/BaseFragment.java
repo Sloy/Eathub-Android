@@ -1,7 +1,7 @@
 package me.eathub.android.presentation.view.fragment;
 
-import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v4.app.Fragment;
 
 public abstract class BaseFragment extends Fragment {
 

@@ -2,7 +2,6 @@ package me.eathub.android.presentation.view.adapter;
 
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.Adapter;
-import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +36,7 @@ public class RecipeGridAdapter extends Adapter<RecipeGridAdapter.ViewHolder> {
     @Override public void onBindViewHolder(ViewHolder viewHolder, int i) {
         RecipeModel item = getItem(i);
         viewHolder.title.setText(item.getTitle());
+        viewHolder.author.setText(item.getAuthorName());
         picasso.load(item.getCoverUrl()).into(viewHolder.cover);
     }
 
@@ -51,6 +51,7 @@ public class RecipeGridAdapter extends Adapter<RecipeGridAdapter.ViewHolder> {
     public static class ViewHolder extends RecyclerView.ViewHolder{
 
         @InjectView(R.id.recipe_title) TextView title;
+        @InjectView(R.id.recipe_author) TextView author;
         @InjectView(R.id.recipe_cover) ImageView cover;
 
         public ViewHolder(View itemView) {

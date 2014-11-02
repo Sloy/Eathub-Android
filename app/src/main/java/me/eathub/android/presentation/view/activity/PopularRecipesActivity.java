@@ -3,36 +3,44 @@ package me.eathub.android.presentation.view.activity;
 import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import butterknife.ButterKnife;
+import butterknife.InjectView;
 import me.eathub.android.R;
 import me.eathub.android.presentation.view.fragment.PopularRecipesFragment;
 
 
-public class PopularRecipesActivity extends Activity {
+public class PopularRecipesActivity extends BaseActivity {
+
+    @InjectView(R.id.toolbar) Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_popular_recipes);
+        ButterKnife.inject(this);
+
+        setSupportActionBar(toolbar);
 
         if (savedInstanceState == null) {
-            getFragmentManager().beginTransaction()
+            getSupportFragmentManager().beginTransaction()
                     .add(R.id.container, new PopularRecipesFragment())
                     .commit();
         }
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_popular_recipes, menu);
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -42,6 +50,10 @@ public class PopularRecipesActivity extends Activity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public Toolbar getToolbar() {
+        return toolbar;
     }
 
 }
