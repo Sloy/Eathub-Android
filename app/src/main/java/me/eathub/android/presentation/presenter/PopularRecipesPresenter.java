@@ -10,8 +10,9 @@ import me.eathub.android.domain.interactor.GetPopularRecipeListUseCase;
 import me.eathub.android.presentation.mapper.RecipeModelDataMapper;
 import me.eathub.android.presentation.model.RecipeModel;
 import me.eathub.android.presentation.view.PopularRecipesView;
+import rx.functions.Func1;
 
-public class PopularRecipesPresenter implements Presenter{
+public class PopularRecipesPresenter implements Presenter {
 
     private final PopularRecipesView viewRecipeList;
     private final GetPopularRecipeListUseCase getPopularRecipeListUseCase;
@@ -35,11 +36,11 @@ public class PopularRecipesPresenter implements Presenter{
 
     private void getRecipeList() {
         getPopularRecipeListUseCase.execute()
-                //TODO map to model
-            .subscribe(recipes -> {
-                PopularRecipesPresenter.this.showRecipesCollectionInView(recipes);
-                PopularRecipesPresenter.this.hideViewLoading();
-            });
+                .map(recipeModelDataMapper::transform)
+                .subscribe(recipes -> {
+                    PopularRecipesPresenter.this.showRecipesCollectionInView(recipes);
+                    PopularRecipesPresenter.this.hideViewLoading();
+                });
     }
 
     public void showViewLoading() {
@@ -62,8 +63,7 @@ public class PopularRecipesPresenter implements Presenter{
         viewRecipeList.showError(errorBundle.getErrorMessage()); //TODO message factory O.o
     }
 
-    private void showRecipesCollectionInView(Collection<Recipe> recipesCollection) {
-        List<RecipeModel> recipeModelCollection = new ArrayList<RecipeModel>(this.recipeModelDataMapper.transform(recipesCollection));
+    private void showRecipesCollectionInView(List<RecipeModel> recipeModelCollection) {
         this.viewRecipeList.renderRecipeList(recipeModelCollection);
     }
 
