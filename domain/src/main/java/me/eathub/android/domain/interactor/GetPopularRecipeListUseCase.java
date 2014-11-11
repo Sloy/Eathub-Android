@@ -1,16 +1,11 @@
 package me.eathub.android.domain.interactor;
 
-import java.util.Collection;
+import java.util.List;
 
 import me.eathub.android.domain.Recipe;
-import me.eathub.android.domain.exception.ErrorBundle;
+import rx.Observable;
 
 public interface GetPopularRecipeListUseCase extends Interactor{
 
-    interface Callback {
-        void onRecipeListLoaded(Collection<Recipe> recipeCollection);
-        void onError(ErrorBundle errorBundle);
-    }
-
-    public void execute(Callback callback);
+    public Observable<List<Recipe>> execute();
 }

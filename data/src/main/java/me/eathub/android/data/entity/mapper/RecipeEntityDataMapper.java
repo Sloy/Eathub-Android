@@ -17,7 +17,7 @@ public class RecipeEntityDataMapper {
         return Recipe;
     }
 
-    public Collection<Recipe> transform(Collection<RecipeEntity> recipeEntityCollection) {
+    public List<Recipe> transform(List<RecipeEntity> recipeEntityCollection) {
         List<Recipe> recipeList = new ArrayList<Recipe>(recipeEntityCollection.size());
         Recipe recipe;
         for (RecipeEntity recipeEntity : recipeEntityCollection) {

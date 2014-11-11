@@ -34,7 +34,12 @@ public class PopularRecipesPresenter implements Presenter{
     }
 
     private void getRecipeList() {
-        getPopularRecipeListUseCase.execute(recipeListCallback);
+        getPopularRecipeListUseCase.execute()
+                //TODO map to model
+            .subscribe(recipes -> {
+                PopularRecipesPresenter.this.showRecipesCollectionInView(recipes);
+                PopularRecipesPresenter.this.hideViewLoading();
+            });
     }
 
     public void showViewLoading() {
@@ -61,18 +66,5 @@ public class PopularRecipesPresenter implements Presenter{
         List<RecipeModel> recipeModelCollection = new ArrayList<RecipeModel>(this.recipeModelDataMapper.transform(recipesCollection));
         this.viewRecipeList.renderRecipeList(recipeModelCollection);
     }
-
-    private final GetPopularRecipeListUseCase.Callback recipeListCallback = new GetPopularRecipeListUseCase.Callback() {
-        @Override public void onRecipeListLoaded(Collection<Recipe> recipeCollection) {
-            PopularRecipesPresenter.this.showRecipesCollectionInView(recipeCollection);
-            PopularRecipesPresenter.this.hideViewLoading();
-        }
-
-        @Override public void onError(ErrorBundle errorBundle) {
-            PopularRecipesPresenter.this.hideViewLoading();
-            PopularRecipesPresenter.this.showErrorMessage(errorBundle);
-            PopularRecipesPresenter.this.showViewRetry();
-        }
-    };
 
 }

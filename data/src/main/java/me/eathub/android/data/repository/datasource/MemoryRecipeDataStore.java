@@ -67,8 +67,7 @@ public class MemoryRecipeDataStore implements RecipeDataStore {
     }
 
 
-    @Override public void getRecipeEntityList(RecipeListCallback recipeListCallback) {
-        recipeListCallback.onRecipeListLoaded(recipeEntityMemoryList);
-
+    @Override public List<RecipeEntity> getRecipeEntityList() {
+        return recipeEntityMemoryList;
     }
 }

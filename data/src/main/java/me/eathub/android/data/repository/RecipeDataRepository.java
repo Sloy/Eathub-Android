@@ -1,6 +1,7 @@
 package me.eathub.android.data.repository;
 
 import java.util.Collection;
+import java.util.List;
 
 import me.eathub.android.data.entity.RecipeEntity;
 import me.eathub.android.data.entity.mapper.RecipeEntityDataMapper;
@@ -30,17 +31,9 @@ public class RecipeDataRepository implements RecipeRepository {
         this.recipeDataStoreFactory = recipeDataStoreFactory;
     }
 
-    @Override public void getPopularRecipeList(final PopularRecipeListCallback recipeListCallback) {
+    @Override public java.util.List<Recipe> getPopularRecipeList() {
         final RecipeDataStore recipeDataStore = recipeDataStoreFactory.createMemoryDataStore();
-        recipeDataStore.getRecipeEntityList(new RecipeDataStore.RecipeListCallback() {
-            @Override public void onRecipeListLoaded(Collection<RecipeEntity> recipeEntityCollection) {
-                Collection<Recipe> recipes = RecipeDataRepository.this.recipeEntityDataMapper.transform(recipeEntityCollection);
-                recipeListCallback.onRecipeListLoaded(recipes);
-            }
-
-            @Override public void onError(Exception exception) {
-                recipeListCallback.onError(new RepositoryErrorBundle(exception));
-            }
-        });
+        List<RecipeEntity> recipeEntityList = recipeDataStore.getRecipeEntityList();
+        return this.recipeEntityDataMapper.transform(recipeEntityList);
     }
 }
