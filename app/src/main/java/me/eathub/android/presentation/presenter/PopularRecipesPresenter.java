@@ -1,16 +1,11 @@
 package me.eathub.android.presentation.presenter;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
-import me.eathub.android.domain.Recipe;
-import me.eathub.android.domain.exception.ErrorBundle;
 import me.eathub.android.domain.interactor.GetPopularRecipeListUseCase;
 import me.eathub.android.presentation.mapper.RecipeModelDataMapper;
 import me.eathub.android.presentation.model.RecipeModel;
 import me.eathub.android.presentation.view.PopularRecipesView;
-import rx.functions.Func1;
 
 public class PopularRecipesPresenter implements Presenter {
 
@@ -40,6 +35,10 @@ public class PopularRecipesPresenter implements Presenter {
                 .subscribe(recipes -> {
                     PopularRecipesPresenter.this.showRecipesCollectionInView(recipes);
                     PopularRecipesPresenter.this.hideViewLoading();
+                }, error -> {
+                    PopularRecipesPresenter.this.hideViewLoading();
+                    PopularRecipesPresenter.this.showErrorMessage(error);
+                    PopularRecipesPresenter.this.showViewRetry();
                 });
     }
 
@@ -59,8 +58,8 @@ public class PopularRecipesPresenter implements Presenter {
         this.viewRecipeList.hideRetry();
     }
 
-    private void showErrorMessage(ErrorBundle errorBundle) {
-        viewRecipeList.showError(errorBundle.getErrorMessage()); //TODO message factory O.o
+    private void showErrorMessage(Throwable errorBundle) {
+        viewRecipeList.showError(errorBundle.getMessage()); //TODO message factory O.o
     }
 
     private void showRecipesCollectionInView(List<RecipeModel> recipeModelCollection) {
