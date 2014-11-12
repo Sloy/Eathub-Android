@@ -10,20 +10,14 @@ import rx.Observable;
 
 public class GetPopularRecipeListUseCaseImpl implements GetPopularRecipeListUseCase {
 
-    private PostExecutor postExecutor;
     private RecipeRepository recipeRepository;
 
-    public GetPopularRecipeListUseCaseImpl(RecipeRepository recipeRepository, AsyncExecutor asyncExecutor, PostExecutor postExecutor) {
+    public GetPopularRecipeListUseCaseImpl(RecipeRepository recipeRepository) {
         this.recipeRepository = recipeRepository;
-        this.postExecutor = postExecutor;
     }
+
     @Override public Observable<List<Recipe>> execute() {
         List<Recipe> result = recipeRepository.getPopularRecipeList();
         return Observable.just(result);
-    }
-
-
-    @Override public void run() {
-
     }
 }

@@ -29,7 +29,6 @@ import me.eathub.android.presentation.mapper.RecipeModelDataMapper;
 import me.eathub.android.presentation.model.RecipeModel;
 import me.eathub.android.presentation.presenter.PopularRecipesPresenter;
 import me.eathub.android.presentation.view.PopularRecipesView;
-import me.eathub.android.presentation.view.activity.PopularRecipesActivity;
 import me.eathub.android.presentation.view.adapter.RecipeGridAdapter;
 
 public class PopularRecipesFragment extends BaseFragment implements PopularRecipesView {
@@ -47,7 +46,6 @@ public class PopularRecipesFragment extends BaseFragment implements PopularRecip
 
     public PopularRecipesFragment() {
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -74,9 +72,7 @@ public class PopularRecipesFragment extends BaseFragment implements PopularRecip
         RecipeDataStoreFactory recipeDataStoreFactory = new RecipeDataStoreFactory();
         RecipeRepository recipeRepository = RecipeDataRepository.getInstance(recipeDataStoreFactory, recipeEntityDataMapper);
 
-        AsyncExecutor asyncExecutor = JobExecutor.getInstance();
-        PostExecutor postExecutor = UIThread.getInstance();
-        GetPopularRecipeListUseCase getPopularRecipeListUseCase = new GetPopularRecipeListUseCaseImpl(recipeRepository, asyncExecutor, postExecutor);
+        GetPopularRecipeListUseCase getPopularRecipeListUseCase = new GetPopularRecipeListUseCaseImpl(recipeRepository);
 
         RecipeModelDataMapper recipeModelDataMapper = new RecipeModelDataMapper();
 

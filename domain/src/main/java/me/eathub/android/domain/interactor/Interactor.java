@@ -1,6 +1,5 @@
 package me.eathub.android.domain.interactor;
 
-public interface Interactor extends Runnable {
+public interface Interactor{
 
-    public void run();
 }
