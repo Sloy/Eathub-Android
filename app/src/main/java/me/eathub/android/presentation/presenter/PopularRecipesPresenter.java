@@ -2,7 +2,7 @@ package me.eathub.android.presentation.presenter;
 
 import java.util.List;
 
-import me.eathub.android.domain.interactor.GetPopularRecipeListUseCase;
+import me.eathub.android.domain.interactor.GetPopularRecipeListInteractor;
 import me.eathub.android.presentation.mapper.RecipeModelDataMapper;
 import me.eathub.android.presentation.model.RecipeModel;
 import me.eathub.android.presentation.view.PopularRecipesView;
@@ -10,12 +10,12 @@ import me.eathub.android.presentation.view.PopularRecipesView;
 public class PopularRecipesPresenter implements Presenter {
 
     private final PopularRecipesView viewRecipeList;
-    private final GetPopularRecipeListUseCase getPopularRecipeListUseCase;
+    private final GetPopularRecipeListInteractor getPopularRecipeListInteractor;
     private final RecipeModelDataMapper recipeModelDataMapper;
 
-    public PopularRecipesPresenter(PopularRecipesView viewRecipeList, GetPopularRecipeListUseCase getPopularRecipeListUseCase, RecipeModelDataMapper recipeModelDataMapper) {
+    public PopularRecipesPresenter(PopularRecipesView viewRecipeList, GetPopularRecipeListInteractor getPopularRecipeListInteractor, RecipeModelDataMapper recipeModelDataMapper) {
         this.viewRecipeList = viewRecipeList;
-        this.getPopularRecipeListUseCase = getPopularRecipeListUseCase;
+        this.getPopularRecipeListInteractor = getPopularRecipeListInteractor;
         this.recipeModelDataMapper = recipeModelDataMapper;
     }
 
@@ -30,7 +30,7 @@ public class PopularRecipesPresenter implements Presenter {
     }
 
     private void getRecipeList() {
-        getPopularRecipeListUseCase.execute()
+        getPopularRecipeListInteractor.execute()
                 .map(recipeModelDataMapper::transform)
                 .subscribe(recipes -> {
                     PopularRecipesPresenter.this.showRecipesCollectionInView(recipes);

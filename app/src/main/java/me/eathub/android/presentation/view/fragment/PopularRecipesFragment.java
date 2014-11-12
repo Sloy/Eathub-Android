@@ -18,13 +18,9 @@ import me.eathub.android.R;
 import me.eathub.android.data.entity.mapper.RecipeEntityDataMapper;
 import me.eathub.android.data.repository.RecipeDataRepository;
 import me.eathub.android.data.repository.datasource.RecipeDataStoreFactory;
-import me.eathub.android.domain.executor.AsyncExecutor;
-import me.eathub.android.domain.executor.PostExecutor;
-import me.eathub.android.domain.interactor.GetPopularRecipeListUseCase;
-import me.eathub.android.domain.interactor.GetPopularRecipeListUseCaseImpl;
+import me.eathub.android.domain.interactor.GetPopularRecipeListInteractor;
+import me.eathub.android.domain.interactor.GetPopularRecipeListInteractorImpl;
 import me.eathub.android.domain.repository.RecipeRepository;
-import me.eathub.android.presentation.UIThread;
-import me.eathub.android.presentation.executor.JobExecutor;
 import me.eathub.android.presentation.mapper.RecipeModelDataMapper;
 import me.eathub.android.presentation.model.RecipeModel;
 import me.eathub.android.presentation.presenter.PopularRecipesPresenter;
@@ -72,11 +68,11 @@ public class PopularRecipesFragment extends BaseFragment implements PopularRecip
         RecipeDataStoreFactory recipeDataStoreFactory = new RecipeDataStoreFactory();
         RecipeRepository recipeRepository = RecipeDataRepository.getInstance(recipeDataStoreFactory, recipeEntityDataMapper);
 
-        GetPopularRecipeListUseCase getPopularRecipeListUseCase = new GetPopularRecipeListUseCaseImpl(recipeRepository);
+        GetPopularRecipeListInteractor getPopularRecipeListInteractor = new GetPopularRecipeListInteractorImpl(recipeRepository);
 
         RecipeModelDataMapper recipeModelDataMapper = new RecipeModelDataMapper();
 
-        popularRecipesPresenter = new PopularRecipesPresenter(this, getPopularRecipeListUseCase, recipeModelDataMapper);
+        popularRecipesPresenter = new PopularRecipesPresenter(this, getPopularRecipeListInteractor, recipeModelDataMapper);
     }
 
     @Override public void showLoading() {
