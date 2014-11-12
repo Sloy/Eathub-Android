@@ -6,6 +6,8 @@ import me.eathub.android.domain.interactor.GetPopularRecipeListInteractor;
 import me.eathub.android.presentation.mapper.RecipeModelDataMapper;
 import me.eathub.android.presentation.model.RecipeModel;
 import me.eathub.android.presentation.view.PopularRecipesView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class PopularRecipesPresenter implements Presenter {
 
@@ -31,6 +33,8 @@ public class PopularRecipesPresenter implements Presenter {
 
     private void getRecipeList() {
         getPopularRecipeListInteractor.execute()
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
                 .map(recipeModelDataMapper::transform)
                 .subscribe(recipes -> {
                     PopularRecipesPresenter.this.showRecipesCollectionInView(recipes);

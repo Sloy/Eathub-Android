@@ -5,6 +5,7 @@ import java.util.List;
 import me.eathub.android.domain.Recipe;
 import me.eathub.android.domain.repository.RecipeRepository;
 import rx.Observable;
+import rx.Subscriber;
 
 public class GetPopularRecipeListInteractorImpl implements GetPopularRecipeListInteractor {
 
@@ -15,7 +16,9 @@ public class GetPopularRecipeListInteractorImpl implements GetPopularRecipeListI
     }
 
     @Override public Observable<List<Recipe>> execute() {
-        List<Recipe> result = recipeRepository.getPopularRecipeList();
-        return Observable.just(result);
+        return Observable.create(subscriber -> {
+            subscriber.onNext(recipeRepository.getPopularRecipeList());
+            subscriber.onCompleted();
+        });
     }
 }
